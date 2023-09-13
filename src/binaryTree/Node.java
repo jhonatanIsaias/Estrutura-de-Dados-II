@@ -1,10 +1,14 @@
+package binaryTree;
+
 public class Node {
     private int value;
-    private Node father;
     private Node right;
     private Node left;
 
-    public Node() {
+    public Node(int value) {
+        this.value = value;
+        this.left = null;
+        this.right = null;
     }
 
     public int getValue() {
@@ -15,13 +19,6 @@ public class Node {
         this.value = value;
     }
 
-    public Node getFather() {
-        return father;
-    }
-
-    public void setFather(Node father) {
-        this.father = father;
-    }
 
     public Node getRight() {
         return right;
