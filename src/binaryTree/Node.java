@@ -1,38 +1,59 @@
 package binaryTree;
 
-public class Node {
-    private int value;
+public class Node implements INo {
+    private Integer value;
     private Node right;
     private Node left;
 
-    public Node(int value) {
-        this.value = value;
+    private Node father;
+
+    public Node() {
+        this.value = null;
         this.left = null;
         this.right = null;
     }
 
+    @Override
     public int getValue() {
         return value;
     }
 
+    @Override
+    public Node getFather() {
+        return this.father;
+    }
+
+    @Override
     public void setValue(int value) {
         this.value = value;
     }
 
+    @Override
+    public void setFather(Node node) {
+        this.father = node;
+    }
 
+    @Override
     public Node getRight() {
         return right;
     }
 
+    @Override
     public void setRight(Node right) {
         this.right = right;
     }
 
+    @Override
     public Node getLeft() {
         return left;
     }
 
+    @Override
     public void setLeft(Node left) {
         this.left = left;
+    }
+    @Override
+    public int compareTo(Node o) {
+        return this.value.compareTo(o.value);
     }
 }
