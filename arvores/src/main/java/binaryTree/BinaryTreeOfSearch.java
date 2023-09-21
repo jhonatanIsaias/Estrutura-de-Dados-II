@@ -28,8 +28,21 @@ public class BinaryTreeOfSearch implements IArvoreBinaria {
     }
 
     @Override
-    public Node remove(Node Node) throws NoInexistenteException {
-        return null;
+    public Node remove(Node node, Node current) throws NoInexistenteException, ArvoreVaziaException {
+
+
+        if(isEmpty()){
+            throw new ArvoreVaziaException("arvore vazia");
+        }
+        Node nodeRemove = find(node,current);
+        Node nodeFather = nodeRemove.getFather();
+        nodeFather.setLeft(nodeRemove.getLeft());
+        nodeFather.setRight(nodeRemove.getRight());
+
+        return nodeRemove;
+
+
+
     }
 
     @Override
@@ -44,20 +57,22 @@ public class BinaryTreeOfSearch implements IArvoreBinaria {
 
     }
     private Node findRecursive(Node node ,Node current) throws NoInexistenteException {
+        if (current != null) {
+            if (current.compareTo(node) == 0) {
+                return current;
+            } else if (current.compareTo(node) > 0) {
 
-         if(current.compareTo(node) == 0){
-            return current;
-        }
-        else if(current.compareTo(node) > 0){
+                return findRecursive(node, current.getLeft());
+            } else if (current.compareTo(node) < 0) {
+                return findRecursive(node, current.getRight());
+            }
 
-            return findRecursive(node,current.getLeft());
         }
-        else if(current.compareTo(node) < 0){
-            return findRecursive(node,current.getRight());
-        }
-        throw new NoInexistenteException("nó não existe");
+
+            throw new NoInexistenteException("nó não existe");
+
+
     }
-
     @Override
     public Node visit(Node Node) throws NoInexistenteException {
         return null;

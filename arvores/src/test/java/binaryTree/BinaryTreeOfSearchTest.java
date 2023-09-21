@@ -1,5 +1,6 @@
 package binaryTree;
 
+import exceptions.NoInexistenteException;
 import junit.framework.TestCase;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,6 +24,8 @@ public class BinaryTreeOfSearchTest extends TestCase {
         Node no2 = new Node();
         Node no3 = new Node();
         Node no4 = new Node();
+        Node no5 = new Node();
+        no5.setValue(10);
 
 
 
@@ -31,7 +34,13 @@ public class BinaryTreeOfSearchTest extends TestCase {
         binaryTreeOfSearch.addValue(no3,8);
         binaryTreeOfSearch.addValue(no4,5);
 
+        Assert.assertEquals(8, binaryTreeOfSearch.find(no3, no1).getValue());
 
-        Assert.assertEquals(8,binaryTreeOfSearch.find(no3,no1).getValue());
+        Exception exception = Assert.assertThrows(NoInexistenteException.class, () -> {
+            binaryTreeOfSearch.find(no5, no1);
+        });
+
+        Assert.assertEquals("nó não existe", exception.getMessage());
     }
-}
+
+    }
