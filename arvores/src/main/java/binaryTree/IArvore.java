@@ -7,9 +7,10 @@ import exceptions.NoInexistenteException;
 
 public interface IArvore {
 
+
   void addValue(Node Node, int value) throws Exception;
-  Node remove(Node Node,Node current ) throws NoInexistenteException, ArvoreVaziaException;
-  Node find(Node Node,Node root) throws NoInexistenteException, ArvoreVaziaException;
+  Node remove(Node Node) throws NoInexistenteException, ArvoreVaziaException;
+  Node find(Node Node) throws NoInexistenteException, ArvoreVaziaException;
 
   Node visit(Node Node) throws NoInexistenteException;
   
