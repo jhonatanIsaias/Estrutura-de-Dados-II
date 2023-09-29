@@ -301,11 +301,11 @@ public class BinaryTreeOfSearch implements IArvoreBinaria {
     public void printTree() {
         printTreeRecursive(root,"",true);
     }
-   private void printTreeRecursive(Node node, String prefix, boolean isLeft){
+   private void printTreeRecursive(Node node, String ligador, boolean isLeft){
        if (node != null) {
-           System.out.println(prefix + (isLeft ? "├── " : "└── ") + node.getValue());
-           printTreeRecursive(node.getLeft(), prefix + (isLeft ? "│   " : "    "), true);
-           printTreeRecursive(node.getRight(), prefix + (isLeft ? "│   " : "    "), false);
+           System.out.println(ligador + (isLeft ? "├── " : "└── ") + node.getValue());
+           printTreeRecursive(node.getLeft(), ligador + (isLeft ? "│   " : "    "), true);
+           printTreeRecursive(node.getRight(), ligador + (isLeft ? "│   " : "    "), false);
        }
    }
 
