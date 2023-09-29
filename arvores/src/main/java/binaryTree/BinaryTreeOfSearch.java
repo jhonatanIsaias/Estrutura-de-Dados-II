@@ -294,10 +294,21 @@ public class BinaryTreeOfSearch implements IArvoreBinaria {
         }
     }
 
+    /**
+     * usa o método printTreeRecursive que pecorre o a árvore recusivamente e imprime usando pré ordem
+     */
     @Override
     public void printTree() {
-
+        printTreeRecursive(root,"",true);
     }
+   private void printTreeRecursive(Node node, String prefix, boolean isLeft){
+       if (node != null) {
+           System.out.println(prefix + (isLeft ? "├── " : "└── ") + node.getValue());
+           printTreeRecursive(node.getLeft(), prefix + (isLeft ? "│   " : "    "), true);
+           printTreeRecursive(node.getRight(), prefix + (isLeft ? "│   " : "    "), false);
+       }
+   }
+
     /**
      * Percorre a árvore em pré-ordem, realizando uma ação em cada nó visitado.
      *

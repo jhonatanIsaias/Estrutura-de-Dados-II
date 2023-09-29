@@ -18,7 +18,7 @@ public class BinaryTreeOfSearchTest extends TestCase {
 
         Assert.assertEquals(4,no.getValue());
     }
-
+    @Test
     public void testRemove() throws Exception {
         BinaryTreeOfSearch binaryTreeOfSearch = new BinaryTreeOfSearch();
         Node no30 = new Node();
@@ -75,14 +75,13 @@ public class BinaryTreeOfSearchTest extends TestCase {
 
     Assert.assertEquals("nó não existe", exception.getMessage());
 }
-    public void testVisit() {
-    }
 
+    @Test
     public void testIsEmpty() {
         BinaryTreeOfSearch binaryTreeOfSearch = new BinaryTreeOfSearch();
         Assert.assertTrue(binaryTreeOfSearch.isEmpty());
     }
-
+    @Test
     public void testIsComplete() throws Exception {
         BinaryTreeOfSearch binaryTreeOfSearch = new BinaryTreeOfSearch();
         Node no30 = new Node();
@@ -106,7 +105,7 @@ public class BinaryTreeOfSearchTest extends TestCase {
 
         Assert.assertTrue( binaryTreeOfSearch.isComplete());
     }
-
+    @Test
     public void testHeight() throws Exception {
         BinaryTreeOfSearch binaryTreeOfSearch = new BinaryTreeOfSearch();
         Node no30 = new Node();
@@ -131,8 +130,30 @@ public class BinaryTreeOfSearchTest extends TestCase {
 
         Assert.assertEquals(3,binaryTreeOfSearch.height());
     }
+    @Test
+    public void testPrintTree() throws Exception {
+        BinaryTreeOfSearch binaryTreeOfSearch = new BinaryTreeOfSearch();
+        Node no30 = new Node();
+        Node no40 = new Node();
+        Node no20 = new Node();
+        Node no10 = new Node();
+        Node no27 = new Node();
+        Node no15 = new Node();
+        Node no45 = new Node();
+        Node no41= new Node();
+        Node no46 = new Node();
 
-    public void testPrintTree() {
+        binaryTreeOfSearch.addValue(no30,30);
+        binaryTreeOfSearch.addValue(no40,40);
+        binaryTreeOfSearch.addValue(no20,20);
+        binaryTreeOfSearch.addValue(no10,10);
+        binaryTreeOfSearch.addValue(no27,27);
+        binaryTreeOfSearch.addValue(no15,15);
+        binaryTreeOfSearch.addValue(no45,45);
+        binaryTreeOfSearch.addValue(no41,41);
+        binaryTreeOfSearch.addValue(no46,46);
+
+        binaryTreeOfSearch.printTree();
     }
     @Test
     public void testPreOrdem() throws Exception {
@@ -194,7 +215,7 @@ public class BinaryTreeOfSearchTest extends TestCase {
         System.out.println();
 
     }
-
+    @Test
     public void testPosOrdem() throws Exception {
         BinaryTreeOfSearch binaryTreeOfSearch = new BinaryTreeOfSearch();
         Node no30 = new Node();
