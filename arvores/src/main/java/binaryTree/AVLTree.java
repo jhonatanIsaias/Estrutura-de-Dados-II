@@ -6,10 +6,7 @@ import exceptions.NoInexistenteException;
 import java.util.LinkedList;
 import java.util.Queue;
 
-/**
- * Uma classe que representa uma árvore binária de pesquisa.
- */
-public class BinaryTreeOfSearch implements IArvoreBinaria {
+public class AVLTree implements IArvoreBinaria{
     private Node root;
 
 
@@ -26,6 +23,8 @@ public class BinaryTreeOfSearch implements IArvoreBinaria {
     public void addValue(Node node, int value) throws Exception {
         node.setValue(value);
         root = addNode(root,node);
+
+
     }
 
     /**
@@ -72,12 +71,12 @@ public class BinaryTreeOfSearch implements IArvoreBinaria {
             throw new ArvoreVaziaException("arvore vazia");
         }
         if(node.compareTo(root) == 0){
-          return removeRoot();
+            return removeRoot();
         }
         Node nodeRemove = find(node);
         Node nodeFather = nodeRemove.getFather();
 
-       removeNode(nodeRemove,nodeFather);
+        removeNode(nodeRemove,nodeFather);
 
 
         return nodeRemove;
@@ -218,7 +217,7 @@ public class BinaryTreeOfSearch implements IArvoreBinaria {
 
         }
 
-            throw new NoInexistenteException("nó não existe");
+        throw new NoInexistenteException("nó não existe");
 
 
     }
@@ -279,6 +278,28 @@ public class BinaryTreeOfSearch implements IArvoreBinaria {
         return countNivel(root) - 1;
     }
 
+    public void calcBalanceTree(Node current){
+
+        if(current.getLeft() != null) calcBalanceTree(current.getLeft());
+        if(current.getRight() != null) calcBalanceTree(current.getRight());
+
+
+        if(current.getLeft() == null && current.getRight() == null){
+            current.setBalance(0);
+        }
+        else if(current.getLeft() == null && current.getRight() != null){
+            current.setBalance(-(countNivel(current.getRight())));
+        }
+        else if(current.getLeft() != null && current.getRight() == null){
+            current.setBalance(countNivel(current.getLeft()));
+        }
+        else {
+            current.setBalance(countNivel(current.getLeft()) - (countNivel(current.getRight())));
+        }
+
+
+    }
+
     /**
      *
      * @param node posição a ser testada durante a recursão
@@ -303,13 +324,14 @@ public class BinaryTreeOfSearch implements IArvoreBinaria {
     public void printTree() {
         printTreeRecursive(root,"",true);
     }
-   private void printTreeRecursive(Node node, String ligador, boolean isLeft){
-       if (node != null) {
-           System.out.println(ligador + (isLeft ? "├── " : "└── ") + node.getValue());
-           printTreeRecursive(node.getLeft(), ligador + (isLeft ? "│   " : "    "), true);
-           printTreeRecursive(node.getRight(), ligador + (isLeft ? "│   " : "    "), false);
-       }
-   }
+    private void printTreeRecursive(Node node, String ligador, boolean isLeft){
+        this.calcBalanceTree(root);
+        if (node != null) {
+            System.out.println(ligador + (isLeft ? "├── " : "└── ") + node.getValue() +" " + node.getBalance());
+            printTreeRecursive(node.getLeft(), ligador + (isLeft ? "│   " : "    "), true);
+            printTreeRecursive(node.getRight(), ligador + (isLeft ? "│   " : "    "), false);
+        }
+    }
 
     /**
      * Percorre a árvore em pré-ordem, realizando uma ação em cada nó visitado.

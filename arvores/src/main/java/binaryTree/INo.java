@@ -11,5 +11,7 @@ public interface INo extends Comparable<Node> {
   Node getFather();
   Node getLeft();
   Node getRight();
+  void setBalance(int balance);
+  int getBalance();
   
 }

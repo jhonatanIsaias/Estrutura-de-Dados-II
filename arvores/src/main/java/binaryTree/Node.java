@@ -4,8 +4,8 @@ public class Node implements INo {
     private Integer value;
     private Node right;
     private Node left;
-
     private Node father;
+    private int balance;
 
     public Node() {
         this.value = null;
@@ -36,6 +36,16 @@ public class Node implements INo {
     @Override
     public Node getRight() {
         return right;
+    }
+
+    @Override
+    public void setBalance(int balance) {
+        this.balance = balance;
+    }
+
+    @Override
+    public int getBalance() {
+        return this.balance;
     }
 
     @Override
