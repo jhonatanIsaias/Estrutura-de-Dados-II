@@ -24,6 +24,7 @@ public class AVLTree implements IArvoreBinaria{
         node.setValue(value);
         root = addNode(root,node);
 
+        this.calcBalanceTree(root);
 
     }
 
@@ -38,20 +39,87 @@ public class AVLTree implements IArvoreBinaria{
      */
     private Node addNode(Node current, Node node) {
 
-        if(current == null){
+        if (current == null) {
             current = node;
 
-        }
-        else if(current.compareTo(node) > 0){
-            current.setLeft(addNode(current.getLeft(),node));
+        } else if (current.compareTo(node) > 0) {
+            current.setLeft(addNode(current.getLeft(), node));
             current.getLeft().setFather(current);
-        }
-        else if(current.compareTo(node) < 0){
-            current.setRight(addNode(current.getRight(),node));
+        } else if (current.compareTo(node) < 0) {
+            current.setRight(addNode(current.getRight(), node));
             current.getRight().setFather(current);
         }
+        int balance = getBalance(current);
 
+        if (balance > 1 && node.compareTo(current.getLeft()) < 0) {
+
+            System.out.println("executei esse");
+            return rotateRight(current);
+        }
+
+        if (balance < -1 && node.compareTo(current.getRight()) > 0) {
+            // Rotação à esquerda
+            return rotateLeft(current);
+        }
+
+        if (balance > 1 && node.compareTo(current.getLeft()) > 0) {
+            // Rotação à esquerda seguida de rotação à direita
+            current.setLeft(rotateLeft(current.getLeft()));
+
+            return rotateRight(current);
+        }
+
+        if (balance < -1 && node.compareTo(current.getRight()) < 0) {
+            // Rotação à direita seguida de rotação à esquerda
+            current.setRight(rotateRight(current.getRight()));
+            return rotateLeft(current);
+        }
         return current;
+    }
+    private Node rotateLeft(Node node) {
+        Node newRoot = node.getRight();
+        Node temp = newRoot.getLeft();
+        newRoot.setLeft(node);
+        node.setRight(temp);
+        node.setFather(newRoot);
+
+        // Atualiza as alturas dos nós afetados
+        node.setBalance(Math.max(getHeight(node.getLeft()), getHeight(node.getRight())) + 1);
+        newRoot.setBalance(Math.max(getHeight(newRoot.getLeft()), getHeight(newRoot.getRight())) + 1);
+
+        return newRoot;
+    }
+
+    private Node rotateRight(Node node) {
+        Node newRoot = node.getLeft();
+        Node temp = newRoot.getRight();
+        newRoot.setRight(node);
+        node.setLeft(temp);
+        node.setFather(newRoot);
+
+        // Atualiza as alturas dos nós afetados
+        node.setBalance(Math.max(getHeight(node.getLeft()), getHeight(node.getRight())) + 1);
+        newRoot.setBalance(Math.max(getHeight(newRoot.getLeft()), getHeight(newRoot.getRight())) + 1);
+
+        return newRoot;
+    }
+
+    // Método auxiliar para obter a altura de um nó, considerando nulos como -1
+    private int getHeight(Node node) {
+        if (node == null) {
+            return -1;
+        }
+        return node.getBalance();
+    }
+
+
+    private int getBalance(Node node) {
+        if (node == null) {
+            return 0;
+        }
+        int leftHeight = countNivel(node.getLeft());
+        int rightHeight = countNivel(node.getRight());
+        return leftHeight - rightHeight;
     }
 
     /**
@@ -278,27 +346,44 @@ public class AVLTree implements IArvoreBinaria{
         return countNivel(root) - 1;
     }
 
-    public void calcBalanceTree(Node current){
-
-        if(current.getLeft() != null) calcBalanceTree(current.getLeft());
-        if(current.getRight() != null) calcBalanceTree(current.getRight());
-
-
-        if(current.getLeft() == null && current.getRight() == null){
-            current.setBalance(0);
+    public Integer calcBalanceTree(Node node){
+        int leftHeight = 0;
+        int rightHeight = 0;
+        if (node == null) {
+            return null;
         }
-        else if(current.getLeft() == null && current.getRight() != null){
-            current.setBalance(-(countNivel(current.getRight())));
+        if(node.getLeft() != null) {
+            leftHeight = calcBalanceTree(node.getLeft());
         }
-        else if(current.getLeft() != null && current.getRight() == null){
-            current.setBalance(countNivel(current.getLeft()));
+        if(node.getRight() != null) {
+            rightHeight = calcBalanceTree(node.getRight());
         }
-        else {
-            current.setBalance(countNivel(current.getLeft()) - (countNivel(current.getRight())));
-        }
+        int balance = leftHeight - rightHeight;
+        node.setBalance(balance);
 
 
+        return Math.max(leftHeight, rightHeight) + 1;
     }
+    private void verifyBalance(Node node){
+
+        if (node == null) {
+            return;
+        }
+
+        verifyBalance(node.getLeft());
+        verifyBalance(node.getRight());
+
+        if (node.getBalance() < -1) {
+            // Rotação à esquerda
+            // Implemente a lógica de rotação à esquerda aqui
+        } else if (node.getBalance() > 1) {
+
+
+        }
+    }
+
+
+
 
     /**
      *
